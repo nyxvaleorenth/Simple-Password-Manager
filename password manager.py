@@ -1,4 +1,6 @@
 import json
+import random
+import string
 
 
 def load_data():
@@ -70,17 +72,25 @@ def delete_entry(data):
     return data
 
 
+def generate_random_password(length=12):
+    chars = string.ascii_letters + string.digits + string.punctuation
+    password = "".join(random.choice(chars) for _ in range(length))
+
+    return password
+
+
 data = load_data()
 
 
 while True:
     print(
-        "Please chose what to do",
+        "\nPlease chose what to do",
         "[1] List all entries",
         "[2] Search for an entry",
         "[3] Add new entry",
         "[4] Delete an entry",
-        "[5] Exit",
+        "[5] Generate random password",
+        "[6] Exit",
         sep="\n",
     )
     user_input = input(">>> ")
@@ -100,6 +110,10 @@ while True:
         write_data(data)
 
     elif user_input == "5":
+        password = generate_random_password()
+        print(password)
+
+    elif user_input == "6":
         print("Thanks for using the app")
         break
 
