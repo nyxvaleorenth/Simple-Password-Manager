@@ -33,22 +33,41 @@ def list_all_entries(data):
         )
 
 
-def search_website():
-    pass
+def search_website(data):
+    website = input("Enter the website name: ")
+    if website in data:
+        print(
+            f"{website} - Username: {data[website]['username']} - Password: {data[website]['password']}"
+        )
+    else:
+        print(f"{website} not found!")
 
 
 def add_entry(data):
     website = input("Enter the website name: ")
+
+    if website in data:
+        print(f"{website} is already saved!")
+        return data
+
     username = input("Enter the user name: ")
     password = input("Enter the password: ")
 
-    data[website] = {username: password}
+    data[website] = {"username": username, "password": password}
 
     return data
 
 
-def delete_entry():
-    pass
+def delete_entry(data):
+    entry = input("Enter the website name: ")
+    if entry not in data:
+        print(f"{entry} not found!")
+        return data
+
+    data.pop(entry)
+    print(f"{entry} is deleted!")
+
+    return data
 
 
 data = load_data()
@@ -70,13 +89,15 @@ while True:
         list_all_entries(data)
 
     elif user_input == "2":
-        search_website()
+        search_website(data)
 
     elif user_input == "3":
-        add_entry(data)
+        data = add_entry(data)
+        write_data(data)
 
     elif user_input == "4":
-        delete_entry()
+        data = delete_entry(data)
+        write_data(data)
 
     elif user_input == "5":
         print("Thanks for using the app")
