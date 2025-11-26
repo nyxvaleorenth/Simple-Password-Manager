@@ -1,6 +1,14 @@
 {
     "github": {
-        "username": "asdf",
-        "password": "sdf"
+        "username": "bnl4dmFsZW9yZW50aA==",
+        "password": "aGVsbG90aGVyZQ=="
+    },
+    "google": {
+        "username": "dHV4",
+        "password": "bnV4MzIxMmQ="
+    },
+    "khaled": {
+        "username": "a2hsYWVk",
+        "password": "MDA4ODg="
     }
 }

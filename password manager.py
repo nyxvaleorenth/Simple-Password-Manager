@@ -1,3 +1,8 @@
+"""
+refactor
+"""
+
+import base64
 import json
 import random
 import string
@@ -7,6 +12,7 @@ def load_data():
     try:
         with open("data.json", "r") as file:
             data = json.load(file)
+        data = run_func(data, decode_text)
         return data
     except FileNotFoundError:
         print("File not found, createing new file...")
@@ -17,6 +23,7 @@ def load_data():
 
 
 def write_data(data):
+    data = run_func(data, encode_text)
     try:
         with open("data.json", "w") as file:
             json.dump(data, file, indent=4)
@@ -29,9 +36,9 @@ def list_all_entries(data):
         print("No entries found!")
         return
 
-    for entry in data:
+    for website in data:
         print(
-            f"{entry} - Username: {data[entry]['username']} - Password: {data[entry]['password']}"
+            f"{website}:\n\tUsername: {data[website]['username']}\n\tPassword: {data[website]['password']}"
         )
 
 
@@ -39,7 +46,7 @@ def search_website(data):
     website = input("Enter the website name: ")
     if website in data:
         print(
-            f"{website} - Username: {data[website]['username']} - Password: {data[website]['password']}"
+            f"{website}:\n\tUsername: {data[website]['username']}\n\tPassword: {data[website]['password']}"
         )
     else:
         print(f"{website} not found!")
@@ -52,7 +59,7 @@ def add_entry(data):
         print(f"{website} is already saved!")
         return data
 
-    username = input("Enter the user name: ")
+    username = input("Enter the username: ")
     password = input("Enter the password: ")
 
     data[website] = {"username": username, "password": password}
@@ -79,8 +86,30 @@ def generate_random_password(length=12):
     return password
 
 
-data = load_data()
+# usernames and passwords encoding and decoding
+def encode_text(text):
+    """encode 1 username or password at a time"""
+    return base64.b64encode(text.encode()).decode()
 
+
+def decode_text(text):
+    """encode 1 username or password at a time"""
+    return base64.b64decode(text.encode()).decode()
+
+
+def run_func(data, func):
+    """runs a function(encode/decond) over the data. used to encode or decode all data at once"""
+    for website in data:
+        username = data[website]["username"]
+        password = data[website]["password"]
+
+        data[website]["username"] = func(username)
+        data[website]["password"] = func(password)
+
+    return data
+
+
+data = load_data()
 
 while True:
     print(
@@ -115,7 +144,7 @@ while True:
 
     elif user_input == "6":
         print("Thanks for using the app")
-        break
+        quit()
 
     else:
         print("Please enter a valid choice")
