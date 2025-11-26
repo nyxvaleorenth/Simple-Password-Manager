@@ -1,14 +1,6 @@
 {
     "github": {
-        "username": "bnl4dmFsZW9yZW50aA==",
-        "password": "aGVsbG90aGVyZQ=="
-    },
-    "google": {
-        "username": "dHV4",
-        "password": "bnV4MzIxMmQ="
-    },
-    "khaled": {
-        "username": "a2hsYWVk",
-        "password": "MDA4ODg="
+        "username": "username",
+        "password": "password"
     }
 }
