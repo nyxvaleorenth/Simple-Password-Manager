@@ -92,6 +92,40 @@ def delete(data):
 
 
 # --------------- encode and decode ---------------------------------------------
+def encode(text):
+    """encode giving text"""
+    return base64.b64encode(text.encode()).decode()
+
+
+def decode(text):
+    """decode giving text"""
+    return base64.b64decode(text.encode()).decode()
+
+
+def run_encode(data):
+    """runs encode over the whole data"""
+    for entry in data:
+        username = data[entry]["username"]
+        password = data[entry]["password"]
+
+        data[entry]["username"] = encode(username)
+        data[entry]["password"] = encode(password)
+
+    return data
+
+
+def run_decode(data):
+    """runs decode over the whole data"""
+    for entry in data:
+        username = data[entry]["username"]
+        password = data[entry]["password"]
+
+        data[entry]["username"] = decode(username)
+        data[entry]["password"] = decode(password)
+
+    return data
+
+
 # --------------- random password generation ------------------------------------
 # --------------- text decoration -----------------------------------------------
 def border():
@@ -102,6 +136,7 @@ def border():
 # --------------- main loop -----------------------------------------------------
 
 data = load()
+data = run_decode(data)
 
 while True:
     border()
@@ -122,26 +157,36 @@ while True:
         border()
         list_all(data)
         border()
+
     elif user_input == "2":
         border()
         search(data)
         border()
+
     elif user_input == "3":
         border()
         data = add(data)
+        data = run_encode(data)
         write(data)
+        data = run_decode(data)
         border()
+
     elif user_input == "4":
         border()
         data = delete(data)
+        data = run_encode(data)
         write(data)
+        data = run_decode(data)
         border()
+
     elif user_input == "5":
         pass
+
     elif user_input == "6":
         print("Thanks for using the app!")
         border()
         quit()
+
     else:
         border()
         print("Please enter a valid choice")
