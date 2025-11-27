@@ -68,7 +68,10 @@ def add(data):
         return data
 
     username = input("Enter the username: ")
-    password = input("Enter the password: ")
+    password = input("Enter the password (press enter to generate random password): ")
+
+    if not password:
+        password = generate_random_password()
 
     data[entry] = {"username": username, "password": password}
 
@@ -127,6 +130,13 @@ def run_decode(data):
 
 
 # --------------- random password generation ------------------------------------
+def generate_random_password(length=12):
+    chars = string.ascii_letters + string.digits + string.punctuation
+    password = "".join(random.choice(chars) for _ in range(length))
+
+    return password
+
+
 # --------------- text decoration -----------------------------------------------
 def border():
     """Draws a simple line of '='"""
@@ -180,7 +190,7 @@ while True:
         border()
 
     elif user_input == "5":
-        pass
+        print(generate_random_password())
 
     elif user_input == "6":
         print("Thanks for using the app!")
